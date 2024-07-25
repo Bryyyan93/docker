@@ -2,10 +2,16 @@
 docker run --name hello --rm hello-world
 
 # 1.2.2
-# Hemos ejecutado varios contenedores que ya no vamos a usar y  no queremos que nos consuman espacio
+## Hemos ejecutado varios contenedores que ya no vamos a usar y  no queremos que nos consuman espacio
 docker system prune -a 
 --> elimina todos los contenedores e imagens que esten detenidos
 
 # 1.2.6
-# Ejecuta un contenedor docker que imprima “Hello World” y  automáticamente el contenedor se borre cuando termine
+## Ejecuta un contenedor docker que imprima “Hello World” y  automáticamente el contenedor se borre cuando termine
 docker run --name hello --rm hello-world
+
+# 1.2.8
+## Ejecuta el contenedor eedugon/practice:1.2.8 en background  con el comando provisto
+docker run -d --name exit_code eedugon/practice:1.2.8
+## Averigua el código de salida 
+Finished
