@@ -15,3 +15,9 @@ docker run --name hello --rm hello-world
 docker run -d --name exit_code eedugon/practice:1.2.8
 ## Averigua el código de salida 
 Finished
+
+# 1.2.10
+##Ejecutar el siguiente contenedor
+docker run -ti --rm nginx
+## Averigua quién es el maintainer de la imagen que ejecuta el  contenedor
+Official build of Nginx
