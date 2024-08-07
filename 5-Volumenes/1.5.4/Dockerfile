@@ -5,7 +5,7 @@ FROM python:3.7-alpine
 WORKDIR /app
 
 # Copia el archivo de la aplicación al contenedor
-COPY app.py .
+COPY . .
 
 # Instala las dependencias
 RUN pip install --no-cache-dir -r requirements.txt
