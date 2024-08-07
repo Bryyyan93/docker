@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  web:
+    image: python:3.8-slim  # Utilizar una imagen base para Python
+    working_dir: /app
+    volumes:
+      - ./app:/app  # Montar el código de la aplicación desde el host
+      - ./logs:/logs  # Montar el directorio de logs para escribir en el host
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development  # Establecer variable de entorno para el modo de desarrollo
+    command: sh -c "pip install -r requirements.txt && python app.py"
+    networks:
+      - app-network
+    depends_on:
+      - redis
+
+  redis:
+    image: "redis:alpine"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
