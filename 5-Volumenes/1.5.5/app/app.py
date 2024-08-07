@@ -9,7 +9,7 @@ redis_host = os.getenv('REDIS_HOST', 'redis')  # Valor por defecto: 'redis'
 redis_port = int(os.getenv('REDIS_PORT', 6379))  # Valor por defecto: 6379
 
 # Configura la conexión a Redis
-redis_client = redis.StrictRedis(host='redis', port=6379, decode_responses=True)
+redis_client = redis.StrictRedis(host=redis_host, port=redis_port, decode_responses=True)
 
 @app.route('/')
 def hello():
