@@ -2,8 +2,7 @@ version: '3'
 
 services:
   web:
-    image: python:3.8-slim  # Utilizar una imagen base para Python
-    working_dir: /app
+    build: ./app
     volumes:
       - ./app:/app  # Montar el código de la aplicación desde el host
       - ./logs:/logs  # Montar el directorio de logs para escribir en el host
