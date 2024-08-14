@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
-import os
 import logging
 import sys
 
@@ -25,7 +24,9 @@ class Note(db.Model):
 
     def __repr__(self):
         return f'<Note {self.title}>'
+    
 db.create_all()  # Crear las tablas si no existen
+
 @app.route('/notes', methods=['POST'])
 def add_note():
     data = request.get_json()
