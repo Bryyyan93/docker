@@ -4,10 +4,7 @@ FROM python:3.8-slim AS build
 WORKDIR /app
 
 # Copiar los archivos de requerimientos
-COPY . .
-# Copiar el código fuente
-#COPY app.py .
-#COPY config.py .
+COPY requirements.txt .
 
 # Instalar las dependencias
 RUN pip install --no-cache-dir -r requirements.txt
@@ -20,6 +17,10 @@ WORKDIR /app
 # Copiar las dependencias desde la fase anterior
 COPY --from=build /usr/local/lib/python3.8/site-packages /usr/local/lib/python3.8/site-packages
 COPY --from=build /usr/local/bin /usr/local/bin
+
+# Copiar el código fuente
+COPY app.py .
+COPY config.py .
 
 # Exponer el puerto de la aplicación
 EXPOSE 5000
