@@ -3,6 +3,8 @@
 services:
   web:
     build: ./app
+    env_file:
+      - env_test1.env
     ports:
       - "5000:5000"
     environment:
