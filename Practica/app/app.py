@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from config import Config
 import logging
 import sys
+import time
+from sqlalchemy.exc import OperationalError
 
 
 app = Flask(__name__)
@@ -24,8 +26,6 @@ class Note(db.Model):
 
     def __repr__(self):
         return f'<Note {self.title}>'
-    
-db.create_all()  # Crear las tablas si no existen
 
 @app.route('/notes', methods=['POST'])
 def add_note():
@@ -43,6 +43,20 @@ def get_notes():
     logger.info(f'Retrieved {len(notes_list)} notes.')
     return jsonify(notes_list)
 
+# Intentar conectar a la base de datos con reintentos
+def wait_for_db():
+    max_retries = 10
+    for i in range(max_retries):
+        try:
+            db.create_all()  # Crear las tablas si no existen
+            print("Database is ready.")
+            return
+        except OperationalError:
+            print("Database not ready yet. Retrying...")
+            time.sleep(5)
+    raise RuntimeError("Database is not available after several retries.")
+
 if __name__ == '__main__':
+    wait_for_db()
     app.run(host='0.0.0.0', port=5000)
 
