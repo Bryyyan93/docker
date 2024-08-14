@@ -1,13 +1,15 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from config import Config
 import os
 import logging
 import sys
 
+
 app = Flask(__name__)
 
 # Cargar la configuración desde el archivo config.py
-app.config.from_object('config.Config')
+app.config.from_object('Config')
 
 # Configuración de los logs en formato JSON
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
@@ -23,7 +25,7 @@ class Note(db.Model):
 
     def __repr__(self):
         return f'<Note {self.title}>'
-
+db.create_all()  # Crear las tablas si no existen
 @app.route('/notes', methods=['POST'])
 def add_note():
     data = request.get_json()
@@ -41,6 +43,5 @@ def get_notes():
     return jsonify(notes_list)
 
 if __name__ == '__main__':
-    db.create_all()  # Crear las tablas si no existen
     app.run(host='0.0.0.0', port=5000)
 
