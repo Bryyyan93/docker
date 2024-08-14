@@ -9,7 +9,7 @@ import sys
 app = Flask(__name__)
 
 # Cargar la configuración desde el archivo config.py
-app.config.from_object('Config')
+app.config.from_object(Config)
 
 # Configuración de los logs en formato JSON
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
