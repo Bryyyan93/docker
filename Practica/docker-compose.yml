@@ -7,12 +7,6 @@ services:
       - env_test1.env
     ports:
       - "5000:5000"
-    environment:
-      - DB_HOST={DB_HOST}
-      - DB_PORT={DB_PORT}
-      - DB_NAME={DB_NAME}
-      - DB_USER={DB_USER}
-      - DB_PASS={DB_PASS}
     volumes:
       - ./logs:/app/logs
     depends_on:
@@ -20,21 +14,15 @@ services:
 
   db:
     image: postgres:13-alpine
-    environment:
-      - POSTGRES_DB={DB_NAME}
-      - POSTGRES_USER={DB_USER}
-      - POSTGRES_PASSWORD={DB_PASS}
+    env_file:
+      - env_test1.env
     volumes:
       - db_data:/var/lib/postgresql/data
 
   phppgadmin:
     image: dockage/phppgadmin
-    environment:
-      - 'PGA_HOST={DB_HOST}'
-      - 'PGA_PORT={DB_PORT}'
-      - 'PGA_DEFAULTDB={DB_NAME}'
-      - 'PGA_DEFAULTDBUSER={DB_USER}'
-      - 'PGA_DEFAULTDBPASS={DB_PASS}'
+    env_file:
+      - env_test1.env
     ports:
       - "8080:80"
     depends_on:
