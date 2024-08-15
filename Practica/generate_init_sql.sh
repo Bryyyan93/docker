@@ -10,8 +10,8 @@ else
     exit 1
 fi
 
-# Generar el archivo SQL
-cat <<EOF > /docker-entrypoint-initdb.d/init.sql
+# Generar el archivo SQL en /tmp
+cat <<EOF > /tmp/init.sql
 DO \$\$
 BEGIN
     IF NOT EXISTS (
