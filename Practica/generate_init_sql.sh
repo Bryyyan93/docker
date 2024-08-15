@@ -36,4 +36,5 @@ END
 \$\$;
 EOF
 
-exec docker-entrypoint.sh postgres
+# Mover el archivo a /docker-entrypoint-initdb.d si tienes permisos
+mv /tmp/init.sql /docker-entrypoint-initdb.d/init.sql
