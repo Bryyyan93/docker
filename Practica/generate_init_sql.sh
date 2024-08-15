@@ -13,3 +13,4 @@ GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO $DB_USER;
 FLUSH PRIVILEGES;
 EOF
 
+exec docker-entrypoint.sh postgres
