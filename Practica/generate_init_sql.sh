@@ -1,9 +1,9 @@
 #!/bin/sh
 
 # Cargar las variables de entorno
-if [ -f "./env_test1.env" ]; then
+if [ -f "/docker-entrypoint-initdb.d/env_test1.env" ]; then
     set -a
-    . ./env_test1.env
+    . /docker-entrypoint-initdb.d/env_test1.env
     set +a
 else
     echo "El archivo env_test1.env no existe."
