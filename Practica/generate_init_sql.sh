@@ -10,6 +10,12 @@ else
     exit 1
 fi
 
+# Esperar a que PostgreSQL esté listo
+until pg_isready -h "$DB_HOST" -p "$DB_PORT" -U "$POSTGRES_USER"; do
+  echo "Esperando a que PostgreSQL esté listo..."
+  sleep 2
+done
+
 # Generar el archivo SQL en /tmp
 cat <<EOF > /tmp/init.sql
 DO \$\$
