@@ -36,5 +36,8 @@ END
 \$\$;
 EOF
 
-# Mover el archivo a /docker-entrypoint-initdb.d si tienes permisos
-mv /tmp/init.sql /docker-entrypoint-initdb.d/init.sql
+# Ejecutar el SQL en la base de datos
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --file=/tmp/init.sql
+
+# Eliminar el archivo temporal
+rm -f /tmp/init.sql
