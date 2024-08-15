@@ -22,7 +22,7 @@ services:
       # Configuracion inicial de la base de dattos 
       #- ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./generate_init_sql.sh:/docker-entrypoint-initdb.d/generate_init_sql.sh
-    entrypoint: ["/docker-entrypoint-initdb.d/generate_init_sql.sh"]
+    entrypoint: ["/bin/sh", "-c", "chmod +x /docker-entrypoint-initdb.d/generate_init_sql.sh && /docker-entrypoint-initdb.d/generate_init_sql.sh && docker-entrypoint.sh postgres"] 
 
   phppgadmin:
     image: dockage/phppgadmin
