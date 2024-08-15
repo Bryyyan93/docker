@@ -1,9 +1,14 @@
 #!/bin/sh
 
 # Cargar las variables de entorno
-set -a
-. ./env_test1.env
-set +a
+if [ -f "./env_test1.env" ]; then
+    set -a
+    . ./env_test1.env
+    set +a
+else
+    echo "El archivo env_test1.env no existe."
+    exit 1
+fi
 
 # Generar el archivo SQL
 cat <<EOF > /docker-entrypoint-initdb.d/init.sql
