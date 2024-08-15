@@ -2,7 +2,7 @@
 
 # Cargar las variables de entorno
 set -a
-./env_test1.env
+. ./env_test1.env
 set +a
 
 # Generar el archivo SQL
