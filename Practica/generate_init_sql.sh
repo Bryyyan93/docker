@@ -14,24 +14,24 @@ fi
 cat <<EOF > /tmp/init.sql
 DO \$\$
 BEGIN
-    IF NOT EXISTS (
-        SELECT FROM pg_database
-        WHERE datname = 'notas'
-    ) THEN
-        CREATE DATABASE notas;
-    END IF;
+   IF NOT EXISTS (
+      SELECT FROM pg_database
+      WHERE datname = '$DB_NAME'
+   ) THEN
+      CREATE DATABASE $DB_NAME;
+   END IF;
 END
 \$\$;
 
-DO \$\$;
+DO \$\$
 BEGIN
-    IF NOT EXISTS (
-        SELECT FROM pg_roles
-        WHERE rolname = 'prueba1'
-    ) THEN
-        CREATE ROLE prueba1 WITH LOGIN PASSWORD 'example1';
-        GRANT ALL PRIVILEGES ON DATABASE notas TO prueba1;
-    END IF;
+   IF NOT EXISTS (
+      SELECT FROM pg_roles
+      WHERE rolname = '$DB_USER'
+   ) THEN
+      CREATE ROLE $DB_USER WITH LOGIN PASSWORD '$DB_PASS';
+      GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO $DB_USER;
+   END IF;
 END
 \$\$;
 EOF
