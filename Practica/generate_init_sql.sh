@@ -7,10 +7,28 @@ set +a
 
 # Generar el archivo SQL
 cat <<EOF > /docker-entrypoint-initdb.d/init.sql
-CREATE DATABASE IF NOT EXISTS $DB_NAME;
-CREATE ROLE IF NOT EXISTS $DB_USER WITH LOGIN PASSWORD '$DB_PASS';
-GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO $DB_USER;
-FLUSH PRIVILEGES;
+DO \$\$
+BEGIN
+    IF NOT EXISTS (
+        SELECT FROM pg_database
+        WHERE datname = 'notas'
+    ) THEN
+        CREATE DATABASE notas;
+    END IF;
+END
+\$\$;
+
+DO \$\$;
+BEGIN
+    IF NOT EXISTS (
+        SELECT FROM pg_roles
+        WHERE rolname = 'prueba1'
+    ) THEN
+        CREATE ROLE prueba1 WITH LOGIN PASSWORD 'example1';
+        GRANT ALL PRIVILEGES ON DATABASE notas TO prueba1;
+    END IF;
+END
+\$\$;
 EOF
 
 exec docker-entrypoint.sh postgres
