@@ -20,13 +20,32 @@ La estructura de la aplicación es la siguiente:
 - docker-compose.yml: Orquestar los servios Docker usando los distintos componentes y los configura.  
 - env_test1.env: Guarda las variables de entorno usadas para configurar Postgre
 - init.sql: Inicializa la DDBB a usar.
- ## Funcionamiento de la aplicación.
- Para realizar la comprobación se funcionamiento se deberá seguir los siguientes pasos:
- - Clonar el repositorio.
- - Contruir y levantar los contenedores: `docker compose --env-file ./env_test1.env up --build`
- - Acceder a la aplicación: `http://localhost:5000/notes`.
- - Para agregar una nota se usa el método `POST`: 
- ```
- curl -X POST -H "Content-Type: application/json" -d '{"title":"Clase de Docker", "description":"Aprender a crear y manejar contenedores"}' http://localhost:5000/notes
- ``` 
- 
+## Funcionamiento de la aplicación.
+Para realizar la comprobación se funcionamiento se deberá seguir los siguientes pasos:
+- Clonar el repositorio.
+- Contruir y levantar los contenedores: `docker compose --env-file ./env_test1.env up --build`
+- Acceder a la aplicación: `http://localhost:5000/notes`.
+- Para agregar una nota se usa el método `POST`: 
+```
+curl -X POST -H "Content-Type: application/json" -d '{"title":"Clase de Docker", "description":"Aprender a crear y manejar contenedores"}' http://localhost:5000/notes
+``` 
+### Verificar el funcionamiento
+Comprobamos que la imagen se cree corrctamente y que se ejecute.
+[imagen]
+Observamos los logs para ver si los proceso se ejecutan corractamente y se crean las instancias propuestas.
+[imagen]
+Confirmamos que los dos contenedores se estén ejecutando correctamente con el comando `docker compose ps -a`.
+[imagen]
+De ser necesario se puede ver los logs de docker con el comando `docker compose logs`
+Una vez realizado las comprobaciones, se comprueba de que efectivamente funciona, para ello se envía una petición `POST` con la información requerida. En los logs se muestra de la siguiente forma:
+[imagen]
+Revisamos que lo publique en el navegador:
+[imagen]
+Comprobamos la persistencia de los datos, enviamos el siguiente comando `docker compose down` 
+[imagen]
+Y volvemos a levantar las imagenes:
+[imagen]
+En caso de que se requiera eliminar los volumenes de persistencia se deberá usar el siguiente comando `docker compose down -v`, aunque no elimina las imagenes creadas. 
+
+## Requisitos
+### Dockerfile que construya el / los contenedores necesarios

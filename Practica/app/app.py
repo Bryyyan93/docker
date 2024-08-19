@@ -16,6 +16,7 @@ app.config.from_object(Config)
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
 
+#  Permite que la aplicación interactúe con la base de datos
 db = SQLAlchemy(app)
 
 # Modelo de la base de datos
@@ -27,6 +28,7 @@ class Note(db.Model):
     def __repr__(self):
         return f'<Note {self.title}>'
 
+# Define un endpoint /notes que acepta solicitudes POST
 @app.route('/notes', methods=['POST'])
 def add_note():
     data = request.get_json()
@@ -36,6 +38,7 @@ def add_note():
     logger.info(f'Note added: {new_note.title}')
     return jsonify({"message": f"Note '{new_note.title}' added."}), 201
 
+#Define un endpoint /notes que acepta solicitudes GET
 @app.route('/notes', methods=['GET'])
 def get_notes():
     notes = Note.query.all()
