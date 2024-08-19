@@ -7,7 +7,7 @@ La estructura de la aplicación es la siguiente:
 │   ├── app.py
 │   ├── config.py
 │   ├── Dockerfile
-|   └── requirements.txt
+│   └── requirements.txt
 │
 ├── docker-compose.yml
 ├── env_test1.env
