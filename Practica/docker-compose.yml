@@ -15,9 +15,7 @@ services:
 
   db:
     image: postgres:13-alpine
-    # Cargar el fichero con las variables de entorno
-    env_file:
-      - env_test1.env
+    restart: always
     volumes:
       - db_data:/var/lib/postgresql/data
       # Configuracion inicial de la base de dattos 
@@ -25,6 +23,16 @@ services:
       #- ./generate_init_sql.sh:/docker-entrypoint-initdb.d/generate_init_sql.sh
       #- ./env_test1.env:/docker-entrypoint-initdb.d/env_test1.env
     #entrypoint: ["sh", "-c", "chmod +x /docker-entrypoint-initdb.d/generate_init_sql.sh && /docker-entrypoint-initdb.d/generate_init_sql.sh && docker-entrypoint.sh postgres"]
-    
+        # Cargar el fichero con las variables de entorno
+    environment:
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_USER: superadmin    
+    env_file:
+      - env_test1.env
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080  
 volumes:
   db_data:
