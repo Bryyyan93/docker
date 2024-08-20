@@ -4,7 +4,7 @@
 set -e
 
 # Cargar variables de entorno desde el archivo .env
-export $(grep -v '^#' ./env_test1.env | xargs)
+export $(grep -v '^#' /docker-entrypoint-initdb.d/env_test1.env | xargs)
 
 # Ejecutar comandos de SQL usando las variables de entorno cargadas
 DB_EXIST=$(psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -tc "SELECT 1 FROM pg_database WHERE datname = '$DB_NAME';")

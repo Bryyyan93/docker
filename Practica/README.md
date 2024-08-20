@@ -48,3 +48,14 @@ Y volvemos a levantar las imágenes:
 En caso de que se requiera eliminar los volumenes de persistencia se deberá usar el siguiente comando `docker compose down -v`, aunque no elimina las imagenes creadas.   
 ![Eliminar las instacias y los volumenes.](./img/eliminar_volumenes.png)  
 
+### Configurabilidad de la aplicación
+Para tratar de dar flexibilidad a la aplicación se ha creado el script `generate_init_sql.sh` que se usará para darle las configuraciones iniciales a la base de datos. Este script cogerá las variables de entorno usadas en `env_test1.env` para configurar las tablas.  
+Para modificar los datos se deberá modificar este script:
+```
+POSTGRES_DB=notas
+DB_HOST=db
+DB_PORT=5432
+DB_NAME=notas
+DB_USER=prueba1
+DB_PASS=example1
+```
