@@ -1,43 +1,28 @@
 #!/bin/sh
 
 # Cargar las variables de entorno
-if [ -f "/docker-entrypoint-initdb.d/env_test1.env" ]; then
-    set -a
-    . /docker-entrypoint-initdb.d/env_test1.env
-    set +a
+set -e
+
+# Cargar variables de entorno desde el archivo .env
+export $(grep -v '^#' /path/to/env_test1.env | xargs)
+
+# Ejecutar comandos de SQL usando las variables de entorno cargadas
+DB_EXIST=$(psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -tc "SELECT 1 FROM pg_database WHERE datname = '$DB_NAME';")
+if [ -z "$DB_EXIST" ]; then
+    echo "Creating database $DB_NAME..."
+    psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "CREATE DATABASE $DB_NAME;"
 else
-    echo "El archivo env_test1.env no existe."
-    exit 1
+    echo "Database $DB_NAME already exists."
 fi
 
-# Generar el archivo SQL en /tmp
-cat <<EOF > /tmp/init.sql
-DO \$\$
-BEGIN
-   IF NOT EXISTS (
-      SELECT FROM pg_database
-      WHERE datname = '$DB_NAME'
-   ) THEN
-      CREATE DATABASE $DB_NAME;
-   END IF;
-END
-\$\$;
-
-DO \$\$
-BEGIN
-   IF NOT EXISTS (
-      SELECT FROM pg_roles
-      WHERE rolname = '$DB_USER'
-   ) THEN
-      CREATE ROLE $DB_USER WITH LOGIN PASSWORD '$DB_PASS';
-      GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO $DB_USER;
-   END IF;
-END
-\$\$;
-EOF
-
-# Ejecutar el SQL en la base de datos
-psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --file=/tmp/init.sql
-
-# Eliminar el archivo temporal
-rm -f /tmp/init.sql
+# Comprobar si el rol ya existe
+ROLE_EXIST=$(psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -tc "SELECT 1 FROM pg_roles WHERE rolname = '$DB_USER';")
+if [ -z "$ROLE_EXIST" ]; then
+    echo "Creating role $DB_USER..."
+    psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" <<-EOSQL
+        CREATE ROLE $DB_USER WITH LOGIN PASSWORD '$DB_PASS';
+        GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO $DB_USER;
+EOSQL
+else
+    echo "Role $DB_USER already exists."
+fi
