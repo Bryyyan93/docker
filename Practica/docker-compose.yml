@@ -29,10 +29,12 @@ services:
       POSTGRES_USER: superadmin    
     env_file:
       - env_test1.env
+
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080  
+      
 volumes:
   db_data:
