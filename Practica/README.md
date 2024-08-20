@@ -8,9 +8,10 @@ La estructura de la aplicación es la siguiente:
 │   ├── config.py
 │   ├── Dockerfile
 │   └── requirements.txt
-│
+├── img
 ├── docker-compose.yml
 ├── env_test1.env
+├── generate_init_sql.sh
 └── init.sql
 ```
 - app.py: Este código en Python define una aplicación web Flask que interactúa con una base de datos para gestionar notas. Ademas proporciona una API REST básica para gestionar las notas creandolas y listandolas.   
@@ -18,7 +19,8 @@ La estructura de la aplicación es la siguiente:
 - Dockerfile: Empaqueta los requisitos mínimos para crear la imagen aplicación, para ello usa `Multistage`. En la primera etapa compila e instala las dependencias y en la segunda etapa construye la imagen final. 
 - requirements.txt: Los requisitos de versiones necesarias para evitar conflictos con los distintos componentes usados para crear la aplicación.
 - docker-compose.yml: Orquestar los servios Docker usando los distintos componentes y los configura.  
-- env_test1.env: Guarda las variables de entorno usadas para configurar Postgre
+- env_test1.env: Guarda las variables de entorno usadas para configurar Postgresql.
+- generate_init_sql.sh: Script de configuración inicial para la DDBB. 
 - init.sql: Inicializa la DDBB a usar.
 ## Funcionamiento de la aplicación.
 Para realizar la comprobación se funcionamiento se deberá seguir los siguientes pasos:  
