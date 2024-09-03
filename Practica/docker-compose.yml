@@ -43,14 +43,20 @@ services:
       - 3100:3100
     volumes:
       - ./loki-config.yml:/etc/loki/loki-config.yaml
+
   promtail:
     image: grafana/promtail:latest
     volumes:
       - ./promtail-config.yml:/etc/promtail/promtail-config.yaml
+    depends_on:
+      - loki  
+
   grafana:
     image: grafana/grafana
     ports:
       - 3000:3000
+    depends_on:
+      - loki  
 
 volumes:
   db_data:
