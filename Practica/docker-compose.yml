@@ -48,6 +48,9 @@ services:
     image: grafana/promtail:latest
     volumes:
       - ./promtail-config.yml:/etc/promtail/promtail-config.yaml
+      # Montar los volumenes de los logs para que Promtail pueda accedera ellos
+      - ./logs:/app/logs  # Montar los logs de la aplicación Flask
+      - db_data:/var/lib/postgresql/data  # Montar los logs de Postgres
     depends_on:
       - loki  
 
