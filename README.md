@@ -12,3 +12,5 @@ Dentro de cada apartado hay un subapartado correspondente al ejercicio en este f
 └── Practica/
 ```
 En cada practica que se requiera hay un fichero readme que explica las actividades o la practica.
+# Ampliación
+He creado otra rama llamada `test` en ella intento mostrar log usando grafana pero no llega a mostrar. Levanta los contenedores correctamente pero no muestra datos.
