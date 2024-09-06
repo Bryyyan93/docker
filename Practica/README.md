@@ -26,7 +26,7 @@ La estructura de la aplicación es la siguiente:
 ## Funcionamiento de la aplicación.
 Para realizar la comprobación se funcionamiento se deberá seguir los siguientes pasos:  
 - Clonar el repositorio.
-- Contruir y levantar los contenedores: `docker compose --env-file ./env_test1.env up --build`
+- Contruir y levantar los contenedores: `docker compose up --build`
 - Acceder a la aplicación: `http://localhost:5000/notes`.
 - Para agregar una nota se usa el método `POST`: 
 ```
@@ -62,3 +62,5 @@ DB_NAME=notas
 DB_USER=prueba1
 DB_PASS=example1
 ```
+## Ampliación
+He intentado mostrar los datos de logs con grafana pero no lo he conseguido, lo levanta correctamente pero no muestra mas log. Levanta todos los contenedores correctamente.
