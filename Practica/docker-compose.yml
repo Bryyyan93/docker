@@ -14,18 +14,11 @@ services:
     entrypoint: ["sh", "-c", "sleep 10 && python app.py"]  
 
   db:
-    image: postgres:13-alpine
+    build: ./data
     restart: always
     volumes:
+    # Para asegurar persistencia
       - db_data:/var/lib/postgresql/data
-      # Configuracion inicial de la base de datos (SIN script de inicializacion) 
-      #- ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      # Configuracion inicial de la base de datos (CON script de inicializacion)
-      - ./data/generate_init_sql.sh:/docker-entrypoint-initdb.d/generate_init_sql.sh
-      - ./data/env_test1.env:/docker-entrypoint-initdb.d/env_test1.env
-    environment:
-      POSTGRES_PASSWORD: qwerty
-      POSTGRES_USER: superadmin
     ports:
       - "5432:5432"  
     # Cargar el fichero con las variables de entorno
