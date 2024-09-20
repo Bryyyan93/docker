@@ -24,8 +24,6 @@ services:
     ports:
       - "5432:5432"  
     # Cargar el fichero con las variables de entorno
-    env_file:
-      - ./env_test1.env
 
   adminer:
     image: adminer
