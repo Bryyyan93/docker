@@ -3,7 +3,7 @@ services:
     build: ./app
     # Cargar el fichero con las variables de entorno
     env_file:
-      - env_test1.env
+      - ./data/env_test1.env
     ports:
       - "5000:5000"
     volumes:
