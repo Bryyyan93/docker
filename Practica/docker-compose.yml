@@ -1,6 +1,7 @@
 services:
   web:
-    build: ./app
+    #build: ./app
+    image: bryyyan/practica_contendores:appwebv1
     # Cargar el fichero con las variables de entorno
     env_file:
       - ./data/env_test1.env
@@ -14,7 +15,8 @@ services:
     entrypoint: ["sh", "-c", "sleep 10 && python app.py"]  
 
   db:
-    build: ./data
+    #build: ./data
+    image: bryyyan/practica_contendores:appdatav1
     restart: always
     volumes:
     # Para asegurar persistencia
