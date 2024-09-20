@@ -1,7 +1,7 @@
 services:
   web:
     #build: ./app
-    image: bryyyan/practica_contendores:appwebv1
+    image: bryyyan/practica_contendores:appweb_v1
     # Cargar el fichero con las variables de entorno
     env_file:
       - ./data/env_test1.env
@@ -16,7 +16,7 @@ services:
 
   db:
     #build: ./data
-    image: bryyyan/practica_contendores:appdatav1
+    image: bryyyan/practica_contendores:appdata_v1
     restart: always
     volumes:
     # Para asegurar persistencia
