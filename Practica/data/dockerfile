@@ -8,11 +8,11 @@ ENV POSTGRES_PASSWORD=qwerty
 ENV POSTGRES_USER=superadmin
 
 # Copiar los scripts de inicialización y archivos de entorno al directorio de inicio de Postgres
-COPY generate_init_sql.sh /docker-entrypoint-initdb.d/generate_init_sql.sh
-COPY env_test1.env /docker-entrypoint-initdb.d/env_test1.env
+#COPY generate_init_sql.sh /docker-entrypoint-initdb.d/generate_init_sql.sh
+#COPY env_test1.env /docker-entrypoint-initdb.d/env_test1.env
 
 # Cambiar permisos para que los scripts sean ejecutables
-RUN chmod +x /docker-entrypoint-initdb.d/generate_init_sql.sh
+#RUN chmod +x /docker-entrypoint-initdb.d/generate_init_sql.sh
 
 # Exponer el puerto para Postgres
 EXPOSE 5432
