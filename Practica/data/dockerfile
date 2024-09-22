@@ -1,0 +1,17 @@
+# Usar la imagen base de Postgres 13 en Alpine
+FROM postgres:13-alpine
+
+WORKDIR /data
+
+# Variables de entorno para la base de datos
+ENV POSTGRES_PASSWORD=qwerty
+ENV POSTGRES_USER=superadmin
+
+# Copiar los scripts de inicialización y archivos de entorno al directorio de inicio de Postgres
+COPY generate_init_sql.sh /docker-entrypoint-initdb.d/generate_init_sql.sh
+
+# Cambiar permisos para que los scripts sean ejecutables
+RUN chmod +x /docker-entrypoint-initdb.d/generate_init_sql.sh
+
+# Exponer el puerto para Postgres
+EXPOSE 5432

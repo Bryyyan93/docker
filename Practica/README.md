@@ -62,3 +62,5 @@ DB_NAME=notas
 DB_USER=prueba1
 DB_PASS=example1
 ```
+## Ampliación
+He intentado mostrar los datos de logs con grafana pero no lo he conseguido, lo levanta correctamente pero no muestra mas log. Levanta todos los contenedores correctamente.
