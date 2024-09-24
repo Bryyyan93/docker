@@ -27,6 +27,21 @@ class Note(db.Model):
 
     def __repr__(self):
         return f'<Note {self.title}>'
+    
+# Ruta para liveness probe
+@app.route('/health', methods=['GET'])
+def health():
+    # Aquí puedes realizar cualquier verificación sobre la salud general del contenedor.
+    # Si está todo correcto, retornamos un código 200.
+    return jsonify({"status": "healthy"}), 200
+
+# Ruta para readiness probe
+@app.route('/ready', methods=['GET'])
+def ready():
+    # Aquí puedes verificar si la app está lista para recibir tráfico.
+    # Podrías realizar alguna comprobación, como si la conexión a la base de datos está lista.
+    # Si todo está correcto, retornamos un código 200.
+    return jsonify({"status": "ready"}), 200    
 
 # Define un endpoint /notes que acepta solicitudes POST
 @app.route('/notes', methods=['POST'])
