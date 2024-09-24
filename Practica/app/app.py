@@ -19,6 +19,10 @@ logger = logging.getLogger()
 #  Permite que la aplicación interactúe con la base de datos
 db = SQLAlchemy(app)
 
+# Variables para controlar el estado
+is_healthy = True
+is_ready = True
+
 # Modelo de la base de datos
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -31,17 +35,43 @@ class Note(db.Model):
 # Ruta para liveness probe
 @app.route('/health', methods=['GET'])
 def health():
-    # Aquí puedes realizar cualquier verificación sobre la salud general del contenedor.
     # Si está todo correcto, retornamos un código 200.
-    return jsonify({"status": "healthy"}), 200
+    if is_healthy:
+        return jsonify({"status": "healthy"}), 200
+    else:
+        return jsonify({"status": "unhealthy"}), 500 # Simular fallo
 
 # Ruta para readiness probe
 @app.route('/ready', methods=['GET'])
 def ready():
     # Aquí puedes verificar si la app está lista para recibir tráfico.
-    # Podrías realizar alguna comprobación, como si la conexión a la base de datos está lista.
     # Si todo está correcto, retornamos un código 200.
-    return jsonify({"status": "ready"}), 200    
+    if is_ready:
+        return jsonify({"status": "ready"}), 200
+    else:
+        return jsonify({"status": "unready"}), 500
+
+# Endpoint para cambiar el estado de health y readiness manualmente (pruebas)
+
+@app.route('/set_health/<status>', methods=['POST'])
+def set_health(status):
+    global is_healthy
+    if status == 'healthy':
+        is_healthy = True
+    elif status == 'unhealthy':
+        is_healthy = False
+    return jsonify({"status": f"health set to {status}"}), 200
+
+@app.route('/set_ready/<status>', methods=['POST'])
+def set_ready(status):
+    global is_ready
+    if status == 'ready':
+        is_ready = True
+    elif status == 'notready':
+        is_ready = False
+    return jsonify({"status": f"readiness set to {status}"}), 200
+
+
 
 # Define un endpoint /notes que acepta solicitudes POST
 @app.route('/notes', methods=['POST'])
